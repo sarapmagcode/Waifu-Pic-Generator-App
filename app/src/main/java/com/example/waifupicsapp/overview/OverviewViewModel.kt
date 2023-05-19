@@ -23,11 +23,11 @@ class OverviewViewModel : ViewModel() {
         getWaifuPic()
     }
 
-    private fun getWaifuPic() {
+    private fun getWaifuPic(category: String = "waifu") {
         viewModelScope.launch {
             _status.value = WaifuPicStatus.LOADING
             try {
-                _waifuPic.value = WaifuApi.retrofitService.getWaifuPic()
+                _waifuPic.value = WaifuApi.retrofitService.getWaifuPic(category)
                 _status.value = WaifuPicStatus.DONE
             } catch (e: Exception) {
                 _status.value = WaifuPicStatus.ERROR
@@ -36,7 +36,7 @@ class OverviewViewModel : ViewModel() {
         }
     }
 
-    fun generateAgain() {
-        getWaifuPic()
+    fun generateAgain(category: String) {
+        getWaifuPic(category)
     }
 }

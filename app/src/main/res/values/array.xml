@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category_array">
+        <item>waifu</item>
+        <item>neko</item>
+        <item>shinobu</item>
+        <item>megumin</item>
+        <item>cuddle</item>
+        <item>hug</item>
+        <item>pat</item>
+        <item>blush</item>
+        <item>smile</item>
+    </string-array>
+</resources>

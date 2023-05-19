@@ -5,6 +5,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 private const val BASE_URL = "https://api.waifu.pics/sfw/"
 
@@ -18,8 +19,8 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface WaifuApiService {
-    @GET("waifu")
-    suspend fun getWaifuPic(): WaifuPic
+    @GET("{category}")
+    suspend fun getWaifuPic(@Path("category") category: String): WaifuPic
 }
 
 object WaifuApi {

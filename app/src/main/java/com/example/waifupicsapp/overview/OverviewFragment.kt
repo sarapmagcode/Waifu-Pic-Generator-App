@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,16 +34,7 @@ class OverviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Observe image view
-        viewModel.waifuPic.observe(viewLifecycleOwner) {
-            it.url?.let { url ->
-                val imgUri = url.toUri().buildUpon().scheme("https").build()
-                binding.waifuImageView.load(imgUri) {
-                    placeholder(R.drawable.loading_animation)
-                    error(R.drawable.ic_connection_error)
-                }
-            }
-        }
+        supplyCategorySpinner()
 
         // Observe status
         viewModel.status.observe(viewLifecycleOwner) {
@@ -63,8 +55,32 @@ class OverviewFragment : Fragment() {
             }
         }
 
-        // Generate new image
-        binding.waifuButton.setOnClickListener { viewModel.generateAgain() }
+        // Observe image view
+        viewModel.waifuPic.observe(viewLifecycleOwner) {
+            it.url?.let { url ->
+                val imgUri = url.toUri().buildUpon().scheme("https").build()
+                binding.waifuImageView.load(imgUri) {
+                    placeholder(R.drawable.loading_animation)
+                    error(R.drawable.ic_connection_error)
+                }
+            }
+        }
+
+        // Generate new image with selected category
+        binding.waifuButton.setOnClickListener {
+            viewModel.generateAgain(binding.categorySpinner.selectedItem.toString())
+        }
+    }
+
+    private fun supplyCategorySpinner() {
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.category_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.categorySpinner.adapter = adapter
+        }
     }
 
     override fun onDestroyView() {
