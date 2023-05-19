@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WaifuPicsApp</string>
+    <string name="waifu_title">Waifu Image Generator</string>
+    <string name="generate">Generate</string>
+</resources>
